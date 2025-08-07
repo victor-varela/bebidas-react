@@ -1,0 +1,5 @@
+1. Se instala tailwindcss-> ver documentacion.
+2. Se instala react-router-dom , esta ya incluye a react-router -> nmpjs react-router-dom
+3. Cambiamos el nombre de App.tsx a RouterApp.tsx, aca esta la base de las rutas que van a ser views o pages
+- Las vistas o paginas se agrupan en una carpeta y los elementos del layout se nombran como componentes en su respectiva carpeta.
+Para crear un layout persistente importamos Outlet de react-router-dom. Rodeamos las views o pages que queremos que COMPARTAN layout.
