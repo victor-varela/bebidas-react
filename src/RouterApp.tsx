@@ -10,7 +10,7 @@ function RouterApp() {
         <Routes>
           <Route element={<Layout/>}> 
 
-          <Route path="/" element={<IndexPage/>} />
+          <Route path="/" element={<IndexPage/>} index />
           <Route path="/favoritos" element={<FavoritesPage/>} />
 
           </Route>
@@ -27,6 +27,8 @@ export default RouterApp;
   - Cada ruta indica una view o page (creamos la carpeta en src, y dentro los componentes)- '/' inicio '/favoritos/ etc. Tiene 2 props principales, path y element
 
   - Para envolver views que comparten layout se hace en un Route con solo la prop element y nombreDelElemento (Layout) este componente funciona con el componente Outlet.
+
+  - A la pagina principal le asignamos el prop index.-> va asi, solito index
 
 
 

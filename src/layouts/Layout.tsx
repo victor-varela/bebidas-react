@@ -5,7 +5,9 @@ const Layout = () => {
   return (
     <>
       <Header />
-      <Outlet/>
+      <main className="container mx-auto py-16">
+        <Outlet />
+      </main>
     </>
   );
 };
@@ -13,6 +15,8 @@ const Layout = () => {
 export default Layout;
 
 /*
-  - Renderiza los elementos que conforman el LAYOUT, y DESPUES lo demas, es decir, outlet: OUTLET va a ser el contenido independiente 
+  - Renderiza los elementos que conforman el LAYOUT (header, body, footer, etc...), y DESPUES lo demas, es decir, <Outlet/>: OUTLET va a ser el contenido independiente (las paginas, inicio, favoritos, carrito, etc...)
+
+  - Semanticamente el outlet va dentro de un main
 
 */
