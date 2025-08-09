@@ -1,15 +1,11 @@
-import { useEffect, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 
 const Header = () => {
   const { pathname } = useLocation();
-  const [isHome, setIsHome] = useState(false);
-  useEffect(() => {
-    pathname === "/" ? setIsHome(true) : setIsHome(false);
-  }, [pathname]);
+  const isHome = pathname === "/";
 
   return (
-    <header className="bg-slate-800 ">
+    <header className={isHome ? "bg-[url(/bg.jpg)] bg-center bg-cover" : "bg-slate-800"}>
       <div className="mx-auto px-5 py-16 container">
         <div className="flex justify-between items-center">
           <div>
@@ -49,17 +45,22 @@ const Header = () => {
               />
             </div>
             <div className="flex flex-col gap-4">
-              <label htmlFor="ingredient" className="text-white uppercase font-bold">
-                nombre o ingredientes
+              <label htmlFor="category" className="text-white uppercase font-bold">
+                categoria
               </label>
-              <input
-                type="text"
-                id="ingredient"
-                name="ingredient"
-                className="focus:outline-none w-full  bg-white text-black p-3 rounded-lg"
-                placeholder="Nombre o Ingrediente. Ej. Vodka, Tequila, Cafe"
-              />
+              <select
+                name="category"
+                id="category"
+                className=" focus:outline-none w-full bg-white text-black p-3 rounded-lg"
+              >
+                <option value="">-- Seleccione --</option>
+              </select>
             </div>
+            <input
+              type="submit"
+              value={"Buscar Recetas"}
+              className=" bg-orange-800  hover:bg-orange-900 text-white font-extrabold  uppercase p-2 rounded-lg  w-full cursor-pointer "
+            />
           </form>
         )}
       </div>
@@ -74,7 +75,12 @@ export default Header;
 
 - Usamos el hook useLocation de react-router-dom para saber en que pagina esta el usuario. Es util para contenidos dinamicos. Extraemos pathName directamente del objeto que devuelve el hook.
 
-- Es raro usar el hook useLocation para saber si estamos en inicio entonces renderizar el formulario, pero creo que el punto es aprender un hook diferente. Normalmente lo que yo haria es en la pagina de inicio hacer el formulario peeeeeero... 
+- Es raro usar el hook useLocation para saber si estamos en inicio entonces renderizar el formulario, pero creo que el punto es aprender un hook diferente. Normalmente lo que yo haria es en la pagina de inicio hacer el formulario peeeeeero... Si el formulario es parte del Header y puede aparecer en varias rutas, mantenlo en el layout con useLocation.
+
+Si el formulario solo vive en la página /, ponlo en el componente de esa página y deja el layout sin lógica de rutas.
+
+<header className={isHome ? "bg-[url(/bg.jpg)] bg-center bg-cover" : "bg-slate-800"}>
+usamos la notacion de corchete de tailwind para inyectar la ruta directamente en la clase bg bg-[value]
 
 
  */

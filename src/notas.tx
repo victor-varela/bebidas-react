@@ -3,3 +3,5 @@
 3. Cambiamos el nombre de App.tsx a RouterApp.tsx, aca esta la base de las rutas que van a ser views o pages
 - Las vistas o paginas se agrupan en una carpeta y los elementos del layout se nombran como componentes en su respectiva carpeta.
 Para crear un layout persistente importamos Outlet de react-router-dom. Rodeamos las views o pages que queremos que COMPARTAN layout.
+
+Capitulo UseLocation y 'theming de tailwindcss': se usa directamente la notacion de corchete con la clase de tailwind para indicar el estilo bg-[value] la documentacion es https://tailwindcss.com/docs/adding-custom-styles. Y combinando UseLocation y theming se hacen vistas dinamicas cambiando componentes como form y estilos como bg-image dependiendo de la ruta en que estemos '/' '/favoritos'.
