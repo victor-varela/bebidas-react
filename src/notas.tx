@@ -5,3 +5,15 @@
 Para crear un layout persistente importamos Outlet de react-router-dom. Rodeamos las views o pages que queremos que COMPARTAN layout.
 
 Capitulo UseLocation y 'theming de tailwindcss': se usa directamente la notacion de corchete con la clase de tailwind para indicar el estilo bg-[value] la documentacion es https://tailwindcss.com/docs/adding-custom-styles. Y combinando UseLocation y theming se hacen vistas dinamicas cambiando componentes como form y estilos como bg-image dependiendo de la ruta en que estemos '/' '/favoritos'.
+
+- Multiples stores con Zustand: En tu buscador de bebidas, usar múltiples stores (o un único store dividido en slices) se hace para:
+
+Separar responsabilidades → cada parte del estado (búsqueda, recetas, favoritos) está aislada.
+
+Escalar fácilmente → es más simple agregar nuevas funciones sin romper las existentes.
+
+Mejor mantenibilidad → cada store/slice es independiente, fácil de probar y modificar.
+
+Evitar acoplamiento → cambios en una parte del estado no afectan otras.
+
+4- Se crea la carpeta stores y un archivo useAppStore.ts que es el principal y de ahi va agrupando los slices.
