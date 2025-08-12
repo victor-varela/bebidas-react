@@ -17,3 +17,6 @@ Mejor mantenibilidad → cada store/slice es independiente, fácil de probar y m
 Evitar acoplamiento → cambios en una parte del estado no afectan otras.
 
 4- Se crea la carpeta stores y un archivo useAppStore.ts que es el principal y de ahi va agrupando los slices.
+
+5- Creamos una carpeta services para las funciones que llaman a la api.
+6- Creamos la carpeta schemas o utils para definir los schemas de respuesta de API con Zod.

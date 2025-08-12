@@ -1,8 +1,8 @@
 import { create } from "zustand";
-import { createRecipesSlice } from "./createRecipesSlice";
+import { createRecipesSlice, type RecipesSliceType } from "./createRecipesSlice";
 
 
-export const useAppStore = create((...a)=>({
+export const useAppStore = create<RecipesSliceType>((...a)=>({
     ...createRecipesSlice(...a)
 }))
 
@@ -12,4 +12,6 @@ export const useAppStore = create((...a)=>({
 - Sintaxis de zustand para crear un store. 
 ...a en la definicion de la funcion create es el rest parameter que guarda las funcionse set, get, api de zustand en un array a.
 ...a en la llamada createRecipesSlice(...a) no es una copia de la función, sino que es la forma de desempaquetar el array de argumentos que capturaste antes con (...a) en el callback de create.
+
+- Se van agregando los types como generics de los diferentes slices como el type principal del store. El primero fue RecipesSliceType
 */

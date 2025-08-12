@@ -1,8 +1,15 @@
+import { useEffect } from "react";
 import { NavLink, useLocation } from "react-router-dom";
+import { useAppStore } from "../stores/useAppStore";
 
 const Header = () => {
   const { pathname } = useLocation();
   const isHome = pathname === "/";
+  const fecthCategories = useAppStore(set => set.fecthCategories);
+
+  useEffect(() => {
+    fecthCategories();
+  }, []);
 
   return (
     <header className={isHome ? "bg-[url(/bg.jpg)] bg-center bg-cover" : "bg-slate-800"}>
