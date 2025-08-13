@@ -1,25 +1,21 @@
 import axios from "axios";
-import {z} from 'zod';
 import { CategoryAPIResponseSchema } from "../schemas/Recipes-Schema";
-import { da } from "zod/locales";
 
+export const getCategories = async () => {
+  const url = "https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list";
 
-export const getCategories = async ()=>{
+  try {
+    const { data } = await axios(url);
 
-    const url = 'https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list'
+    const result = CategoryAPIResponseSchema.safeParse(data);
 
-    try {
-        const {data} = await axios(url)
-     
-        const parsedCategories = CategoryAPIResponseSchema.safeParse(data)
-        console.log(parsedCategories);
-    
-        
-        
-    } catch (error) {
-        console.log(error);
-        
+    if (!result.success) {
+      console.log("Respuesta mal formada");
+      return;
     }
-    console.log('buscando recetas...');
-    
-}
+
+    return result.data;
+  } catch (error) {
+    console.log(error);
+  }
+};

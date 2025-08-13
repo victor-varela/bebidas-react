@@ -5,8 +5,10 @@ import { useAppStore } from "../stores/useAppStore";
 const Header = () => {
   const { pathname } = useLocation();
   const isHome = pathname === "/";
-  const fecthCategories = useAppStore(set => set.fecthCategories);
-
+  const fecthCategories = useAppStore(state => state.fecthCategories);
+  const categories =  useAppStore(state => state.categories);
+  
+  
   useEffect(() => {
     fecthCategories();
   }, []);
@@ -61,6 +63,9 @@ const Header = () => {
                 className=" focus:outline-none w-full bg-white text-black p-3 rounded-lg"
               >
                 <option value="">-- Seleccione --</option>
+                {categories.drinks.map(cat=>(
+                  <option value={cat.strCategory} key={cat.strCategory}>{cat.strCategory}</option>
+                ))}
               </select>
             </div>
             <input
