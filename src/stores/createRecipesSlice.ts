@@ -1,11 +1,12 @@
 import type { StateCreator } from "zustand";
 import { getCategories } from "../services/RecipeService";
-import type { Categories } from "../types";
+import type { Categories, SearchFilter } from "../types";
 
 //al principio no sabemos como es la estructura de las categorias porque eso lo da la api. por eso creamos una category 'generic' para hacer feliz a Ts.
 export type RecipesSliceType = {
   categories: Categories;
   fecthCategories: () => Promise<void>;
+  fetchRecipes: (search: SearchFilter) => Promise<void>
 };
 
 export const createRecipesSlice: StateCreator<RecipesSliceType> = set => ({
@@ -17,6 +18,11 @@ export const createRecipesSlice: StateCreator<RecipesSliceType> = set => ({
     const categories = await getCategories();
     set({ categories });
   },
+
+  fetchRecipes: async (search)=>{
+    console.log(search);
+    
+  }
 });
 
 /*
@@ -45,5 +51,9 @@ StateCreator<RecipesSliceType> = forma de la función que crea ese estado y que 
 *-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
 La logica y estado que tenga que ver con las recetas van aca, por lo tanto llamar a api se hace aca, y la funcion que finalmente la llama la ubicamos en services para no agrandar demasiado el store.
+
+- Aca recibimos los datos del form y hacemos el llamado a la api. Este slice maneja la parte de las recetas por eso se llama asi bebe hermoso!°
+
+- Fijate la estructura, los states (variables tiene un type) las funciones (acciones) tienen un type, todas se agrupane en RecipesSliceType y dentro del Slice estan ya definidas las variables (states) y las funciones (acciones)
 
 */

@@ -12,6 +12,8 @@ const Header = () => {
     category: "",
   });
 
+  const fetchRecipes = useAppStore(state => state.fetchRecipes);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => {
     setSearchFilter({
       ...searchFilter,
@@ -22,8 +24,10 @@ const Header = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    console.log("enviando..");
+    //Validar
+   
+    //Buscar recetas
+    fetchRecipes(searchFilter);
   };
 
   useEffect(() => {
@@ -72,6 +76,7 @@ const Header = () => {
                 className="focus:outline-none w-full  bg-white text-black p-3 rounded-lg"
                 placeholder="Nombre o Ingrediente. Ej. Vodka, Tequila, Cafe"
                 onChange={handleChange}
+                value={searchFilter.ingredient}
               />
             </div>
             <div className="flex flex-col gap-4">
@@ -83,6 +88,7 @@ const Header = () => {
                 id="category"
                 className=" focus:outline-none w-full bg-white text-black p-3 rounded-lg"
                 onChange={handleChange}
+                value={searchFilter.category}
               >
                 <option value="">-- Seleccione --</option>
                 {categories.drinks.map(cat => (
@@ -100,6 +106,7 @@ const Header = () => {
                   ? " bg-orange-800  hover:bg-orange-900 text-white font-extrabold  uppercase p-2 rounded-lg  w-full cursor-pointer"
                   : "bg-orange-100  text-white font-extrabold  uppercase p-2 rounded-lg  w-full cursor-not-allowed"
               }
+              disabled={isDisabled}
             />
           </form>
         )}
