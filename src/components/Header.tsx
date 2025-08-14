@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { useAppStore } from "../stores/useAppStore";
 
@@ -6,9 +6,26 @@ const Header = () => {
   const { pathname } = useLocation();
   const isHome = pathname === "/";
   const fecthCategories = useAppStore(state => state.fecthCategories);
-  const categories =  useAppStore(state => state.categories);
-  
-  
+  const categories = useAppStore(state => state.categories);
+  const [searchFilter, setSearchFilter] = useState({
+    ingredient: "",
+    category: "",
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => {
+    setSearchFilter({
+      ...searchFilter,
+      [e.target.name]: e.target.value,
+    });
+  };
+  const isDisabled = Object.values(searchFilter).includes("");
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    console.log("enviando..");
+  };
+
   useEffect(() => {
     fecthCategories();
   }, []);
@@ -40,7 +57,10 @@ const Header = () => {
           </nav>
         </div>
         {isHome && (
-          <form className="bg-orange-400 p-10 my-32 rounded-lg md:w-1/2 2xl:w-1/3 shadow space-y-6">
+          <form
+            className="bg-orange-400 p-10 my-32 rounded-lg md:w-1/2 2xl:w-1/3 shadow space-y-6"
+            onSubmit={handleSubmit}
+          >
             <div className="flex flex-col gap-4">
               <label htmlFor="ingredient" className="text-white uppercase font-bold">
                 nombre o ingredientes
@@ -51,6 +71,7 @@ const Header = () => {
                 name="ingredient"
                 className="focus:outline-none w-full  bg-white text-black p-3 rounded-lg"
                 placeholder="Nombre o Ingrediente. Ej. Vodka, Tequila, Cafe"
+                onChange={handleChange}
               />
             </div>
             <div className="flex flex-col gap-4">
@@ -61,17 +82,24 @@ const Header = () => {
                 name="category"
                 id="category"
                 className=" focus:outline-none w-full bg-white text-black p-3 rounded-lg"
+                onChange={handleChange}
               >
                 <option value="">-- Seleccione --</option>
-                {categories.drinks.map(cat=>(
-                  <option value={cat.strCategory} key={cat.strCategory}>{cat.strCategory}</option>
+                {categories.drinks.map(cat => (
+                  <option value={cat.strCategory} key={cat.strCategory}>
+                    {cat.strCategory}
+                  </option>
                 ))}
               </select>
             </div>
             <input
               type="submit"
               value={"Buscar Recetas"}
-              className=" bg-orange-800  hover:bg-orange-900 text-white font-extrabold  uppercase p-2 rounded-lg  w-full cursor-pointer "
+              className={
+                !isDisabled
+                  ? " bg-orange-800  hover:bg-orange-900 text-white font-extrabold  uppercase p-2 rounded-lg  w-full cursor-pointer"
+                  : "bg-orange-100  text-white font-extrabold  uppercase p-2 rounded-lg  w-full cursor-not-allowed"
+              }
             />
           </form>
         )}
@@ -93,6 +121,8 @@ Si el formulario solo vive en la página /, ponlo en el componente de esa págin
 
 <header className={isHome ? "bg-[url(/bg.jpg)] bg-center bg-cover" : "bg-slate-800"}>
 usamos la notacion de corchete de tailwind para inyectar la ruta directamente en la clase bg bg-[value]
+
+- Creamos un state 'local' par capturar los input del formulario.
 
 
  */
