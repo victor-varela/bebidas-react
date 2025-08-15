@@ -54,6 +54,6 @@ La logica y estado que tenga que ver con las recetas van aca, por lo tanto llama
 
 - Aca recibimos los datos del form y hacemos el llamado a la api. Este slice maneja la parte de las recetas por eso se llama asi bebe hermoso!°
 
-- Fijate la estructura, los states (variables tiene un type) las funciones (acciones) tienen un type, todas se agrupane en RecipesSliceType y dentro del Slice estan ya definidas las variables (states) y las funciones (acciones)
+- Fijate la estructura, los states (variables tiene un type) las funciones (acciones) tienen un type, todas se agrupane en RecipesSliceType y dentro del Slice estan ya definidas las variables (states) y las funciones (acciones), getRecipies y getCategories son funciones AUXILIARES, no tienen su type porque no forman parte del estado global de APP.
 
 */

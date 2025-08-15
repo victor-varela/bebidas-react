@@ -29,7 +29,7 @@ export const getCategories = async () => {
 };
 
 export const getRecipies = async (search:SearchFilter)=>{
-  const url =`https:www.thecocktaildb.com/api/json/v1/1/filter.php?i=${search.ingredient}`
+  const url =`https:www.thecocktaildb.com/api/json/v1/1/filter.php?i=${search.ingredient}&c=${search.category}`
 
   let data
   try {
@@ -44,6 +44,8 @@ export const getRecipies = async (search:SearchFilter)=>{
 
 /*
 - el try catch es para controlar donde se puede romper el codigo cuando haces una peticion a una api, en este caso es en axios.. se usa una tecnica destructurin con parentesis para poder obtener el valor destructurado de data. Por defecto para que entre en el catch es por un error de red o mas grave, si quieres controlar la peticion hay que ver en el objeto data si no tiene 'missing data' por ejemplo.. 
+
+- En la llamada a los ingredientes y categorias se hizo una union con & para i= y c= son la union de 2 endpoints de la api.
 
 
 
