@@ -1,12 +1,12 @@
 import type { StateCreator } from "zustand";
-import { getCategories } from "../services/RecipeService";
+import { getCategories, getRecipies } from "../services/RecipeService";
 import type { Categories, SearchFilter } from "../types";
 
 //al principio no sabemos como es la estructura de las categorias porque eso lo da la api. por eso creamos una category 'generic' para hacer feliz a Ts.
 export type RecipesSliceType = {
   categories: Categories;
   fecthCategories: () => Promise<void>;
-  fetchRecipes: (search: SearchFilter) => Promise<void>
+  fetchRecipes: (search: SearchFilter) => Promise<void>;
 };
 
 export const createRecipesSlice: StateCreator<RecipesSliceType> = set => ({
@@ -20,7 +20,7 @@ export const createRecipesSlice: StateCreator<RecipesSliceType> = set => ({
   },
 
   fetchRecipes: async (search)=>{
-    console.log(search);
+   await getRecipies(search)
     
   }
 });
