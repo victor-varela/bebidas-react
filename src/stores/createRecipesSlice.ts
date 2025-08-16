@@ -1,17 +1,22 @@
 import type { StateCreator } from "zustand";
 import { getCategories, getRecipies } from "../services/RecipeService";
-import type { Categories, SearchFilter } from "../types";
+import type { Categories, Recipes, SearchFilter } from "../types";
 
 //al principio no sabemos como es la estructura de las categorias porque eso lo da la api. por eso creamos una category 'generic' para hacer feliz a Ts.
 export type RecipesSliceType = {
   categories: Categories;
   fecthCategories: () => Promise<void>;
   fetchRecipes: (search: SearchFilter) => Promise<void>;
+  recipes: Recipes;
 };
 
 export const createRecipesSlice: StateCreator<RecipesSliceType> = set => ({
-  categories:{
-    drinks:[]
+  categories: {
+    drinks: [],
+  },
+
+  recipes: {
+    drinks: [],
   },
 
   fecthCategories: async () => {
@@ -19,10 +24,10 @@ export const createRecipesSlice: StateCreator<RecipesSliceType> = set => ({
     set({ categories });
   },
 
-  fetchRecipes: async (search)=>{
-   await getRecipies(search)
-    
-  }
+  fetchRecipes: async search => {
+    const recipes = await getRecipies(search);
+    set({ recipes });
+  },
 });
 
 /*
@@ -54,6 +59,8 @@ La logica y estado que tenga que ver con las recetas van aca, por lo tanto llama
 
 - Aca recibimos los datos del form y hacemos el llamado a la api. Este slice maneja la parte de las recetas por eso se llama asi bebe hermoso!°
 
-- Fijate la estructura, los states (variables tiene un type) las funciones (acciones) tienen un type, todas se agrupane en RecipesSliceType y dentro del Slice estan ya definidas las variables (states) y las funciones (acciones), getRecipies y getCategories son funciones AUXILIARES, no tienen su type porque no forman parte del estado global de APP.
+- Fijate la estructura, los states (variables tiene un type) las funciones (acciones) tienen un type, todas se agrupane en RecipesSliceType y dentro del Slice estan ya definidas/inicializadas las variables (states) y las funciones (acciones), getRecipies y getCategories son funciones AUXILIARES, no tienen su type porque no forman parte del estado global de APP.
+
+- Inicializacion de states como arrays vacios: --> 👉 Entonces, sí, se escribe drinks porque es una propiedad garantizada de la API, y se inicializa como [] porque es la forma más fiel y segura de representar "no hay datos aún" sin romper el tipado de TS ni engañar al frontend.
 
 */
