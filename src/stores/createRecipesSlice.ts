@@ -1,6 +1,6 @@
 import type { StateCreator } from "zustand";
-import { getCategories, getRecipies } from "../services/RecipeService";
-import type { Categories, Recipes, SearchFilter } from "../types";
+import { getCategories, getRecipies, getSelectedRecipe } from "../services/RecipeService";
+import type { Categories, Recipe, Recipes, SearchFilter, SelectedRecipe } from "../types";
 
 //al principio no sabemos como es la estructura de las categorias porque eso lo da la api. por eso creamos una category 'generic' para hacer feliz a Ts.
 export type RecipesSliceType = {
@@ -8,6 +8,8 @@ export type RecipesSliceType = {
   fecthCategories: () => Promise<void>;
   fetchRecipes: (search: SearchFilter) => Promise<void>;
   recipes: Recipes;
+  selectRecipe: (id: Recipe["idDrink"]) => Promise<void>;
+  selectedRecipe: SelectedRecipe;
 };
 
 export const createRecipesSlice: StateCreator<RecipesSliceType> = set => ({
@@ -19,6 +21,8 @@ export const createRecipesSlice: StateCreator<RecipesSliceType> = set => ({
     drinks: [],
   },
 
+  selectedRecipe: {} as SelectedRecipe,
+
   fecthCategories: async () => {
     const categories = await getCategories();
     set({ categories });
@@ -27,6 +31,11 @@ export const createRecipesSlice: StateCreator<RecipesSliceType> = set => ({
   fetchRecipes: async search => {
     const recipes = await getRecipies(search);
     set({ recipes });
+  },
+
+  selectRecipe: async id => {
+    const selectedRecipe = await getSelectedRecipe(id);
+    set({ selectedRecipe });
   },
 });
 
@@ -62,5 +71,9 @@ La logica y estado que tenga que ver con las recetas van aca, por lo tanto llama
 - Fijate la estructura, los states (variables tiene un type) las funciones (acciones) tienen un type, todas se agrupane en RecipesSliceType y dentro del Slice estan ya definidas/inicializadas las variables (states) y las funciones (acciones), getRecipies y getCategories son funciones AUXILIARES, no tienen su type porque no forman parte del estado global de APP.
 
 - Inicializacion de states como arrays vacios: --> 👉 Entonces, sí, se escribe drinks porque es una propiedad garantizada de la API, y se inicializa como [] porque es la forma más fiel y segura de representar "no hay datos aún" sin romper el tipado de TS ni engañar al frontend.
+
+- Cuando seleccionamos una receta tomamos su id y llamamos un nuevo endpoint de la API, esa accion tambien se hace aca porque tiene que ver con las recetas.
+
+- A medida que vamos creando nuevos states / funciones primero lo declaramos en el type del slice, luego si es un state lo inicializamos y luego si es una funcion la desarrollamos en el slice. Asi va el orden. Cuando estamos declarando el type nos daremos cuenta que si es una respuesta de api entonces inferimos con Zod y creamos el type. --  SelectedRecipe: {} as SelectedRecipe, esta declaracion en particular es valida para no poner todos esos strings vacios que quedan feos, tambien se puede hacer con cualquier state : )
 
 */

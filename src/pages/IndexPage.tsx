@@ -9,11 +9,11 @@ const IndexPage = () => {
     <>
       <h1 className="font-bold text-6xl">Recetas</h1>
       {hasRecipes ? (
-        <>
+        <div className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-10 my-10"> 
           {recipes.drinks.map(recipe => (
             <DrinkCard recipe={recipe} key={recipe.idDrink} />
           ))}
-        </>
+        </div>
       ) : (
         <p className=" my-10 text-center text-2xl">No hay bebidas aun, utiliza el formulario para buscar recetas</p>
       )}
@@ -34,6 +34,7 @@ Presentational (presentacional):
 Se encarga de la UI pura: recibe props y renderiza.
 No maneja estado complejo ni efectos secundarios, solo se enfoca en "mostrar".
 
+- Reflexion randoom: el .map SI transforma en la iteracion, toma un array de objetos con datos y devuelve un array con elementos JSX.
 
 
 

@@ -1,6 +1,10 @@
 import axios from "axios";
-import { CategoryAPIResponseSchema, RecipesAPIResponseSchema } from "../schemas/Recipes-Schema";
-import type { SearchFilter } from "../types";
+import {
+  CategoryAPIResponseSchema,
+  RecipesAPIResponseSchema,
+  SelectedRecipeAPIShcema,
+} from "../schemas/Recipes-Schema";
+import type { Recipe, SearchFilter } from "../types";
 
 
 export const getCategories = async () => {
@@ -31,10 +35,25 @@ export const getCategories = async () => {
 
 export const getRecipies = async (search: SearchFilter) => {
   const url = `https:www.thecocktaildb.com/api/json/v1/1/filter.php?i=${search.ingredient}&c=${search.category}`;
-  
+
   const { data } = await axios(url);
 
   const result = RecipesAPIResponseSchema.safeParse(data);
+
+  if (!result.success) {
+    console.log("respuesta mal formada");
+    return;
+  }
+
+  return result.data;
+};
+
+export const getSelectedRecipe = async (id: Recipe["idDrink"]) => {
+  const url = `https:www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
+
+  const { data } = await axios(url);
+  
+  const result = SelectedRecipeAPIShcema.safeParse(data);
 
   if (!result.success) {
     console.log("respuesta mal formada");
