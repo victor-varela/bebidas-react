@@ -10,6 +10,8 @@ export type RecipesSliceType = {
   recipes: Recipes;
   selectRecipe: (id: Recipe["idDrink"]) => Promise<void>;
   selectedRecipe: SelectedRecipe;
+  modal: boolean
+  closeModal: () => void
 };
 
 export const createRecipesSlice: StateCreator<RecipesSliceType> = set => ({
@@ -20,6 +22,8 @@ export const createRecipesSlice: StateCreator<RecipesSliceType> = set => ({
   recipes: {
     drinks: [],
   },
+
+  modal: false,
 
   selectedRecipe: {} as SelectedRecipe,
 
@@ -35,8 +39,12 @@ export const createRecipesSlice: StateCreator<RecipesSliceType> = set => ({
 
   selectRecipe: async id => {
     const selectedRecipe = await getSelectedRecipe(id);
-    set({ selectedRecipe });
+    set({ selectedRecipe, modal:true });
   },
+
+  closeModal: ()=>{
+    set({modal:false, selectedRecipe:{}as SelectedRecipe})
+  }
 });
 
 /*
@@ -76,4 +84,15 @@ La logica y estado que tenga que ver con las recetas van aca, por lo tanto llama
 
 - A medida que vamos creando nuevos states / funciones primero lo declaramos en el type del slice, luego si es un state lo inicializamos y luego si es una funcion la desarrollamos en el slice. Asi va el orden. Cuando estamos declarando el type nos daremos cuenta que si es una respuesta de api entonces inferimos con Zod y creamos el type. --  SelectedRecipe: {} as SelectedRecipe, esta declaracion en particular es valida para no poner todos esos strings vacios que quedan feos, tambien se puede hacer con cualquier state : )
 
+- Fijate para crear la funcionalidad del modal que copiamos del curso con HeadlessUI, creamos el state modal en el type y luego en la funcion que queremos que maneje ese state lo seteamos. Que funcion debe trigger el modal ? pues selectRecipe.. ahi va entonces el set.
+OJO: sigue el orden: 1-Declararla/define en el type del slice, 2- Inicializarla si es un state si es funcion no se inicializa, 3-Usarla, set si es un state y escribir la funcion si es una accion/funcion
+
+-Fijate que cuando cierras el modal tambien reinicias el objeto selectedRecipe:Patrón común de modal/detail
+Lo que estás haciendo es el patrón clásico:
+
+selectRecipe(id) → cargo la data + abro modal
+
+closeModal() → cierro modal + limpio la data
+
+Así te asegurás de que cada vez que abrís el modal, arrancás con un nuevo fetch y no con el estado anterior.
 */

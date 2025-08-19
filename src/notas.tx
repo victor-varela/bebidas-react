@@ -20,3 +20,4 @@ Evitar acoplamiento → cambios en una parte del estado no afectan otras.
 
 5- Creamos una carpeta services para las funciones que llaman a la api. la API que usamos es https://www.thecocktaildb.com/
 6- Creamos la carpeta schemas o utils para definir los schemas de respuesta de API con Zod.
+7- Usamos Headless UI para el modal de notificaciones.
