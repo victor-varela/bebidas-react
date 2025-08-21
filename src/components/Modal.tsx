@@ -1,11 +1,31 @@
 import { Dialog, Transition, TransitionChild, DialogTitle, DialogPanel } from "@headlessui/react";
 import { Fragment } from "react";
 import { useAppStore } from "../stores/useAppStore";
+import type { Recipe } from "../types";
 
 export default function Modal() {
   const modal = useAppStore(state => state.modal);
   const closeModal = useAppStore(state => state.closeModal);
   const selectedRecipe = useAppStore(state => state.selectedRecipe);
+
+  const renderIngredients = () => {
+    const ingredients = []; //aca vamos a guardar los Li que van a tener ingrediente - medida
+
+    for (let i = 1; i <= 6; i++) {
+      const ingredient = selectedRecipe[`strIngredient${i}` as keyof Recipe];
+      const measure = selectedRecipe[`strMeasure${i}` as keyof Recipe];
+
+      if (ingredient && measure) {
+        ingredients.push(
+          <li key={i}>
+            {ingredient} - {measure}
+          </li>
+        );
+      }
+    }
+
+    return ingredients;
+  };
 
   return (
     <>
@@ -39,14 +59,21 @@ export default function Modal() {
                     {/* title */}
                     {selectedRecipe.strDrink}
                   </DialogTitle>
+                  <img
+                    src={selectedRecipe.strDrinkThumb}
+                    alt={`imagen de ${selectedRecipe.strDrink}`}
+                    className="w-96 mx-auto"
+                  />
                   <DialogTitle as="h3" className="text-gray-900 text-2xl font-extrabold my-5">
                     {/* Ingredients  */}
                     Ingredientes y Cantidades
                   </DialogTitle>
+                  {renderIngredients()}
                   <DialogTitle as="h3" className="text-gray-900 text-2xl font-extrabold my-5">
-                    //Instructions
-                 
+                    {/*Instructions*/}
+                    Instrucciones
                   </DialogTitle>
+                  <p className="text-lg"> {selectedRecipe.strInstructions}</p>
                 </DialogPanel>
               </TransitionChild>
             </div>
@@ -58,3 +85,11 @@ export default function Modal() {
 }
 
 // UseAPPStore comparte el estadao GLOBAL DE APP, por eso nos valemos del hook para pasar el valor de modal al componente.
+
+/*
+- ATENCION: lo mas importante hasta ahora de este modal es la logica para manejar los datos de la api y mostrarlos en el modal. Sabemos que ajustamos hasta a 6 ingredientes y medidas para las recetas. Algunos tienen mas y otros tienen menos. La logica para mostrar todos los que realmente tengan en el modal es la que hicimos en renderIngredients. Basicamente esa funcion retorna un <li> element (HTML) --> JsxElement (React). es una funcion que pinta un Li. Por eso el array ingredients es un : JSX.Element.
+
+
+
+
+*/

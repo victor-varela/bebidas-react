@@ -11,6 +11,6 @@ import { z } from "zod";
 export type Categories = z.infer<typeof CategoryAPIResponseSchema>;
 export type SearchFilter = z.infer<typeof SearchFilterSchema>;
 export type Recipes = z.infer<typeof RecipesAPIResponseSchema>;
-export type Recipe = z.infer<typeof RecipeAPIResponseSchema>;
+export type Drink = z.infer<typeof RecipeAPIResponseSchema>;
 export type SelectedRecipe = z.infer <typeof SelectedRecipeAPISchema>
-export type RecipeSchema = z.infer<typeof RecipeSchema>
+export type Recipe = z.infer<typeof RecipeSchema>
