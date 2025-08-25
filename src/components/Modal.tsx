@@ -27,6 +27,11 @@ export default function Modal() {
     return ingredients;
   };
 
+  const handleFavorite = ()=>{
+    console.log('agregando...');
+    
+  }
+
   return (
     <>
       <Transition appear show={modal} as={Fragment}>
@@ -55,6 +60,15 @@ export default function Modal() {
                 leaveTo="opacity-0 scale-95"
               >
                 <DialogPanel className="relative transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-2xl sm:p-6">
+                  <div className=" flex justify-end ">
+                    <button
+                      className=" w-10 h-10 text-3xl font-bold rounded-full bg-black text-white cursor-pointer"
+                      type="button"
+                      onClick={closeModal}
+                    >
+                      X
+                    </button>
+                  </div>
                   <DialogTitle as="h3" className="text-gray-900 text-4xl font-extrabold my-5 text-center">
                     {/* title */}
                     {selectedRecipe.strDrink}
@@ -74,6 +88,13 @@ export default function Modal() {
                     Instrucciones
                   </DialogTitle>
                   <p className="text-lg"> {selectedRecipe.strInstructions}</p>
+                  <button
+                    className=" w-full p-3 bg-orange-500 hover:bg-orange-400 mt-2 rounded text-center text-white font-bold uppercase cursor-pointer"
+                    type="button"
+                    onClick={handleFavorite}
+                  >
+                    Agregar a Favoritos
+                  </button>
                 </DialogPanel>
               </TransitionChild>
             </div>
