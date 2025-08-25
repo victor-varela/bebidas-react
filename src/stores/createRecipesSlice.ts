@@ -66,7 +66,7 @@ Además, puede usar set() y get() dentro, y TS te va a autocompletar eso.
 
 Por eso la diferencia:
 
-RecipesSliceType = forma del estado. QUE FORMA VA A TENER EL SLICE--> Un slice es una pieza de estado y lógica; en Zustand se suele tipar con StateCreator para integrarlo correctamente en el store y mantener tipado estricto, aunque no es estrictamente obligatorio para que funcione.r
+RecipesSliceType = forma del estado. QUE FORMA VA A TENER EL SLICE--> Un slice es una pieza de estado y lógica; en Zustand se suele tipar con StateCreator para integrarlo correctamente en el store y mantener tipado estricto, aunque no es estrictamente obligatorio para que funcione.
 
 StateCreator<RecipesSliceType> = forma de la función que crea ese estado y que Zustand sabe usar.
 

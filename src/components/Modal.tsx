@@ -7,6 +7,7 @@ export default function Modal() {
   const modal = useAppStore(state => state.modal);
   const closeModal = useAppStore(state => state.closeModal);
   const selectedRecipe = useAppStore(state => state.selectedRecipe);
+  const adFavorite = useAppStore(state => state.adFavorite);
 
   const renderIngredients = () => {
     const ingredients = []; //aca vamos a guardar los Li que van a tener ingrediente - medida
@@ -27,10 +28,9 @@ export default function Modal() {
     return ingredients;
   };
 
-  const handleFavorite = ()=>{
-    console.log('agregando...');
-    
-  }
+  const handleClickFavorite = () => {
+    adFavorite();
+  };
 
   return (
     <>
@@ -89,9 +89,9 @@ export default function Modal() {
                   </DialogTitle>
                   <p className="text-lg"> {selectedRecipe.strInstructions}</p>
                   <button
-                    className=" w-full p-3 bg-orange-500 hover:bg-orange-400 mt-2 rounded text-center text-white font-bold uppercase cursor-pointer"
+                    className=" w-full p-3 bg-orange-600 hover:bg-orange-500 mt-2 rounded text-center text-white font-bold uppercase cursor-pointer shadow"
                     type="button"
-                    onClick={handleFavorite}
+                    onClick={handleClickFavorite}
                   >
                     Agregar a Favoritos
                   </button>
