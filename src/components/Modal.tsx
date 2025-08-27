@@ -28,8 +28,8 @@ export default function Modal() {
     return ingredients;
   };
 
-  const handleClickFavorite = () => {
-    adFavorite();
+  const handleClickFavorite = (selectedRecipe: Recipe) => {
+    adFavorite(selectedRecipe);
   };
 
   return (
@@ -91,7 +91,7 @@ export default function Modal() {
                   <button
                     className=" w-full p-3 bg-orange-600 hover:bg-orange-500 mt-2 rounded text-center text-white font-bold uppercase cursor-pointer shadow"
                     type="button"
-                    onClick={handleClickFavorite}
+                    onClick={()=>handleClickFavorite(selectedRecipe)}
                   >
                     Agregar a Favoritos
                   </button>
