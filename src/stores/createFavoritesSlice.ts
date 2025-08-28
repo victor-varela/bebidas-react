@@ -4,18 +4,22 @@ import type { Recipe } from "../types";
 export type FavoritesSliceType = {
   favorites: Recipe[];
   adFavorite: (recipe: Recipe) => void;
+  favoriteExist: (id: Recipe["idDrink"]) => boolean;
 };
 
 export const createFavoritesSlice: StateCreator<FavoritesSliceType> = (set, get) => ({
   favorites: [],
 
-  adFavorite: (recipe: Recipe) => {   
-    if (!get().favorites.some((fav)=> fav.idDrink === recipe.idDrink)) {
+  adFavorite: (recipe: Recipe) => {
+    if (!get().favoriteExist(recipe.idDrink)) {
       set(state => ({
         favorites: [...state.favorites, recipe],
       }));
     }
   },
+  favoriteExist: id => get().favorites.some(fav => fav.idDrink === id),
+
+
 });
 
 /*
