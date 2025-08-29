@@ -3,6 +3,7 @@ import { Fragment } from "react";
 import { useAppStore } from "../stores/useAppStore";
 import type { Recipe } from "../types";
 
+
 export default function Modal() {
   const modal = useAppStore(state => state.modal);
   const closeModal = useAppStore(state => state.closeModal);
@@ -113,7 +114,6 @@ export default function Modal() {
 
 /*
 - ATENCION: lo mas importante hasta ahora de este modal es la logica para manejar los datos de la api y mostrarlos en el modal. Sabemos que ajustamos hasta a 6 ingredientes y medidas para las recetas. Algunos tienen mas y otros tienen menos. La logica para mostrar todos los que realmente tengan en el modal es la que hicimos en renderIngredients. Basicamente esa funcion retorna un <li> element (HTML) --> JsxElement (React). es una funcion que pinta un Li. Por eso el array ingredients es un : JSX.Element.
-
 
 
 
