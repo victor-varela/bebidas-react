@@ -2,12 +2,14 @@ import { create } from "zustand";
 import { createRecipesSlice, type RecipesSliceType } from "./createRecipesSlice";
 import { devtools } from 'zustand/middleware'
 import { createFavoritesSlice, type FavoritesSliceType } from "./createFavoritesSlice";
+import { createNotificationSlice, type NotificationSliceType } from "./createNotification";
 
 
-export const useAppStore = create<RecipesSliceType & FavoritesSliceType>()(
+export const useAppStore = create<RecipesSliceType & FavoritesSliceType & NotificationSliceType>()(
     devtools((...a)=>({
     ...createRecipesSlice(...a),
-    ...createFavoritesSlice(...a)
+    ...createFavoritesSlice(...a),
+    ...createNotificationSlice(...a)
 })))
 
 
@@ -21,5 +23,5 @@ export const useAppStore = create<RecipesSliceType & FavoritesSliceType>()(
 
 - Ojo con devtool, es como deadpool -->> hay que poner () inmediatamente despues del type y ANTES del callback escribir devtool(...todo lo demas)
 
-- Agrego el otro slice, el viene con su respectivo Type. Por eso la UNION de types en el generci de appstore.
+- Agrego el otro slice, el viene con su respectivo Type. Por eso la UNION de types en el generic de appstore.
 */

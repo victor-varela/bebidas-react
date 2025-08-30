@@ -23,3 +23,4 @@ Evitar acoplamiento → cambios en una parte del estado no afectan otras.
 7- Usamos Headless UI para el modal de notificaciones.
 8- Creamos nuevo slice que maneja FAVORITOS. Ya lo que tiene que ver con buscar y mostrar recetas lo hicimos en el slice de recetas
 Todo esto se hace para mejor ORGANIZACION del codigo del proyecto, las logicas separadas, queda mas lindo. Se le conoce como el Slice Pattern.
+9- Creamos otro slice para las notificaciones.
