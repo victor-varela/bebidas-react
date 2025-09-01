@@ -11,9 +11,6 @@ const Layout = () => {
     loadFromStorage()
   },[])
 
-const notification=  useAppStore(state=> state.notification)
-console.log(notification.text);
-
   return (
     <>
       <Header />

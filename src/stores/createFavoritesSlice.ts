@@ -1,14 +1,20 @@
 import type { StateCreator } from "zustand";
 import type { Recipe } from "../types";
+import { type NotificationSliceType } from "./createNotification";
 
 export type FavoritesSliceType = {
   favorites: Recipe[];
   adFavorite: (recipe: Recipe) => void;
   favoriteExist: (id: Recipe["idDrink"]) => boolean;
-  loadFromStorage: ()=> void
+  loadFromStorage: () => void;
 };
 
-export const createFavoritesSlice: StateCreator<FavoritesSliceType> = (set, get) => ({
+export const createFavoritesSlice: StateCreator<
+  FavoritesSliceType & NotificationSliceType,
+  [],
+  [],
+  FavoritesSliceType
+> = (set, get) => ({
   favorites: [],
 
   adFavorite: (recipe: Recipe) => {
@@ -16,30 +22,32 @@ export const createFavoritesSlice: StateCreator<FavoritesSliceType> = (set, get)
       set(state => ({
         favorites: [...state.favorites, recipe],
       }));
+
+      //Llamamos a la funcion que maneja la notification
+      get().showNotification({ error: false, text: "Se agrego a favoritos" });
     } else {
       set(state => ({
         favorites: state.favorites.filter(fav => fav.idDrink !== recipe.idDrink),
       }));
+      get().showNotification({ error: true, text: "Se elimino de favoritos" });
     }
 
     //Guardamos en localStorage- recuperamos el state de favorites con get()
-    localStorage.setItem('favorites', JSON.stringify(get().favorites))
-
+    localStorage.setItem("favorites", JSON.stringify(get().favorites));
   },
 
   favoriteExist: id => get().favorites.some(fav => fav.idDrink === id),
 
-  loadFromStorage: ()=>{
-    const storedFavorites = localStorage.getItem('favorites')
+  loadFromStorage: () => {
+    const storedFavorites = localStorage.getItem("favorites");
 
-    if(storedFavorites){
+    if (storedFavorites) {
       //si hay algo asignar al state
       set({
-        favorites:JSON.parse(storedFavorites)
-      })
+        favorites: JSON.parse(storedFavorites),
+      });
     }
-  }
-
+  },
 });
 
 /*
@@ -56,8 +64,40 @@ export const createFavoritesSlice: StateCreator<FavoritesSliceType> = (set, get)
     
     * Luego tenemos que llamar a la funcion loadFromStorage, donde? en el Layout apenas renderice porque ese Layout afecta tanto a FavoritePage.tsx como a IndexPage.tsx
 
+COMO ACCEDER A OTRO SLICE DENTRO DE UN SLICE?--> RESPUESTA: PASARLE EL TYPE AL OTRO SLICE
+Sí, suena raro a primera vista, pero en realidad es porque StateCreator usa dos tipos distintos dentro de sus genéricos:
+
+StateCreator<
+  WholeStore,   // 👈 todo el estado al que este slice va a tener acceso
+  [],
+  [],
+  SliceType     // 👈 la parte de estado que este slice "declara" y devuelve
+>
 
 
+Por eso te toca poner a FavoritesSliceType en dos lugares:
+
+En el primero (WholeStore) → porque tu función de slice necesita poder acceder tanto a sus propias props como a las de NotificationSliceType (con get() y set()).
+
+En el último (SliceType) → porque ahí estás diciendo “este slice agrega esta porción de estado al store”.
+
+Ejemplo visual
+StateCreator<
+  FavoritesSliceType & NotificationSliceType, // <- acceso total disponible dentro del slice
+  [],
+  [],
+  FavoritesSliceType                          // <- lo que este slice en particular agrega
+>
+
+
+📌 Si solo pusieras NotificationSliceType en el primero, dentro de get() no te reconocería favorites porque no sabría que forman parte del estado.
+📌 Si no pusieras FavoritesSliceType en el último, entonces este slice no “aportaría” nada al store global.
+
+👉 En otras palabras:
+
+El primer genérico es el contexto.
+
+El último genérico es la contribución de ese slice.
 
 
 
