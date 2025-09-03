@@ -8,8 +8,8 @@ export type Notification = {
 
 export type NotificationSliceType = {
   notification: Notification;
-  showNotification: (payload: Pick<Notification, 'error'| 'text'>)=>void
-
+  showNotification: (payload: Pick<Notification, "error" | "text">) => void;
+  hideNotification: () => void;
 };
 
 export const createNotificationSlice: StateCreator<NotificationSliceType> = (set, get) => ({
@@ -19,16 +19,28 @@ export const createNotificationSlice: StateCreator<NotificationSliceType> = (set
     show: false,
   },
 
-  showNotification:(payload)=>{
+  showNotification: payload => {
     set({
-        notification:{
-            text: payload.text,
-            error:payload.error,
-            show: true
-        }
-    })
-  }
+      notification: {
+        text: payload.text,
+        error: payload.error,
+        show: true,
+      },
+    });
+    setTimeout(() => {
+      get().hideNotification();
+    }, 3000);
+  },
 
+  hideNotification: () => {
+    set({
+      notification: {
+        text: "",
+        error: false,
+        show: false,
+      },
+    });
+  },
 });
 
 /*
@@ -39,6 +51,7 @@ export const createNotificationSlice: StateCreator<NotificationSliceType> = (set
     Despues, agregas el slice en el store pirncipal.. ve a store.
 
     - Este slice tiene la funcion que maneja la notificacion, es showNotification por lo tanto se agrega en el type y se escribe en el slice. La funcion maneja el estado del objeto notificacion por eso le pasamos set.
+    - Tambien tiene la funcion que cierra la notificacion.--> haces lo mismo que la anterior.
 
 
 

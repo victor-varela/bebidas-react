@@ -25,3 +25,4 @@ Evitar acoplamiento → cambios en una parte del estado no afectan otras.
 Todo esto se hace para mejor ORGANIZACION del codigo del proyecto, las logicas separadas, queda mas lindo. Se le conoce como el Slice Pattern.
 9- Creamos otro slice para las notificaciones.
 10- Copiamos el componente Notification de los recursos de la clase y lo importamos en layout como hicimos con Modal.
+11- Se usa la funcion lazy y el componente Suspense de react para mejorar la PERFORMANCE de la APP. Con eso dividimos los archivos del build y asi el user va a descargar las paginas de la app conforme las vaya visitando y no todos los archivos de la app al inicio. Esto esta en RouterApp.tsx

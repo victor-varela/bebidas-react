@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import IndexPage from "./pages/IndexPage";
-import FavoritesPage from "./pages/FavoritesPage";
+import { lazy, Suspense } from "react";
+const IndexPage = lazy(() => import("./pages/IndexPage"));
+const FavoritesPage = lazy(() => import("./pages/FavoritesPage"));
 import Layout from "./layouts/Layout";
 
 function RouterApp() {
@@ -8,11 +9,24 @@ function RouterApp() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route element={<Layout/>}> 
-
-          <Route path="/" element={<IndexPage/>} index />
-          <Route path="/favoritos" element={<FavoritesPage/>} />
-
+          <Route element={<Layout />}>
+            <Route
+              path="/"
+              element={
+                <Suspense fallback={"cargando.."}>
+                  <IndexPage />
+                </Suspense>
+              }
+              index
+            />
+            <Route
+              path="/favoritos"
+              element={
+                <Suspense fallback={"cargando..."}>
+                  <FavoritesPage />
+                </Suspense>
+              }
+            />
           </Route>
         </Routes>
       </BrowserRouter>
@@ -30,7 +44,7 @@ export default RouterApp;
 
   - A la pagina principal le asignamos el prop index.-> va asi, solito index
 
-
+  - Por ultimo importamos lazy y Suspense para dividir las paginas en varios archivos js de la APP: a cada pagina la envolvemos en <Suspense> a las paginas que queremos separar y la importamos dentro de la funcion lazy. Fijate en vsCode te da los ejemplos para usar lazy, te paras en la funcion y lees, lees, lees, lees bebe.
 
 
 */
