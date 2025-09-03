@@ -3,6 +3,7 @@ import { lazy, Suspense } from "react";
 const IndexPage = lazy(() => import("./pages/IndexPage"));
 const FavoritesPage = lazy(() => import("./pages/FavoritesPage"));
 import Layout from "./layouts/Layout";
+const GenerateAI = lazy(() => import("./pages/AiGenerate"));
 
 function RouterApp() {
   return (
@@ -13,7 +14,7 @@ function RouterApp() {
             <Route
               path="/"
               element={
-                <Suspense fallback='cargando...'>
+                <Suspense fallback="cargando...">
                   <IndexPage />
                 </Suspense>
               }
@@ -22,8 +23,16 @@ function RouterApp() {
             <Route
               path="/favoritos"
               element={
-                <Suspense fallback='cargando...'>
+                <Suspense fallback="cargando...">
                   <FavoritesPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path="/generate"
+              element={
+                <Suspense fallback="cargando...">
+                  <GenerateAI />
                 </Suspense>
               }
             />
