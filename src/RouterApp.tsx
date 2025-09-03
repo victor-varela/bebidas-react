@@ -13,7 +13,7 @@ function RouterApp() {
             <Route
               path="/"
               element={
-                <Suspense fallback={"cargando.."}>
+                <Suspense fallback='cargando...'>
                   <IndexPage />
                 </Suspense>
               }
@@ -22,7 +22,7 @@ function RouterApp() {
             <Route
               path="/favoritos"
               element={
-                <Suspense fallback={"cargando..."}>
+                <Suspense fallback='cargando...'>
                   <FavoritesPage />
                 </Suspense>
               }
