@@ -3,13 +3,15 @@ import { createRecipesSlice, type RecipesSliceType } from "./createRecipesSlice"
 import { devtools } from 'zustand/middleware'
 import { createFavoritesSlice, type FavoritesSliceType } from "./createFavoritesSlice";
 import { createNotificationSlice, type NotificationSliceType } from "./createNotification";
+import { createAiSlice, type AiSliceType } from "./createAiSlice";
 
 
-export const useAppStore = create<RecipesSliceType & FavoritesSliceType & NotificationSliceType>()(
+export const useAppStore = create<RecipesSliceType & FavoritesSliceType & NotificationSliceType & AiSliceType >()(
     devtools((...a)=>({
     ...createRecipesSlice(...a),
     ...createFavoritesSlice(...a),
-    ...createNotificationSlice(...a)
+    ...createNotificationSlice(...a),
+    ...createAiSlice(...a)
 })))
 
 

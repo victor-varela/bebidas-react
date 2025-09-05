@@ -1,10 +1,29 @@
+import { useAppStore } from "../stores/useAppStore";
+
 export default function GenerateAI() {
+  const showNotification = useAppStore(state => state.showNotification);
+  const generateRecipe = useAppStore(state => state.generateRecipe);
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const form = new FormData(e.currentTarget);
+    // Crea un objeto con todos los inputs del form.
+    const prompt = form.get("prompt") as string;
+    // Obtiene el valor del input con name="prompt". esta asociando con el name del input
+
+    if (prompt.trim() === "") {
+      showNotification({ text: "la busqueda no puede tener campos vacios", error: true });
+      return;
+    }
+
+   await generateRecipe(prompt);
+  };
   return (
     <>
       <h1 className="text-6xl font-extrabold">Generar Receta con IA</h1>
 
       <div className="max-w-4xl mx-auto">
-        <form onSubmit={() => {}} className="flex flex-col space-y-3 py-10">
+        <form onSubmit={handleSubmit} className="flex flex-col space-y-3 py-10">
           <div className="relative">
             <input
               name="prompt"
@@ -40,3 +59,11 @@ export default function GenerateAI() {
     </>
   );
 }
+
+/*
+- Validamos el onSubmit usando el objeto FormData.
+- Usamos async y await generateRecipe para await.. esperar a que tenga la data desde openROuter (el modelo IA)
+
+
+
+*/

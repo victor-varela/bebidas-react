@@ -26,3 +26,4 @@ Todo esto se hace para mejor ORGANIZACION del codigo del proyecto, las logicas s
 9- Creamos otro slice para las notificaciones.
 10- Copiamos el componente Notification de los recursos de la clase y lo importamos en layout como hicimos con Modal.
 11- Se usa la funcion lazy y el componente Suspense de react para mejorar la PERFORMANCE de la APP. Con eso dividimos los archivos del build y asi el user va a descargar las paginas de la app conforme las vaya visitando y no todos los archivos de la app al inicio. Esto esta en RouterApp.tsx
+12- Usamos openRouter para incluir un modelo de IA en la APP. 
