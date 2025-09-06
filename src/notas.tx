@@ -27,3 +27,12 @@ Todo esto se hace para mejor ORGANIZACION del codigo del proyecto, las logicas s
 10- Copiamos el componente Notification de los recursos de la clase y lo importamos en layout como hicimos con Modal.
 11- Se usa la funcion lazy y el componente Suspense de react para mejorar la PERFORMANCE de la APP. Con eso dividimos los archivos del build y asi el user va a descargar las paginas de la app conforme las vaya visitando y no todos los archivos de la app al inicio. Esto esta en RouterApp.tsx
 12- Usamos openRouter para incluir un modelo de IA en la APP. 
+    - Instalamos Vercel AI sdk para facilitar el codigo que se CONECTA con modelo.
+    - Creamos API key y la declaramos como variable de entorno.
+    - Creamos un servicio solo para AI y manejamos todo aparte.
+    - Instalamos la dependencia ai para acceder a la funcion streamText la cual maneja el texto que entrega el modelo. npm i ai
+
+            Vercel AI SDK: el "conector" fácil que entiende cómo hablar con distintos modelos de IA.
+            streamText: la función que hace que las respuestas lleguen en streaming, dándole a tu chatbot una experiencia fluida y natural.
+
+        Para ver ejemplos de como implementar Vercel AI SDK y streamText, ve a la docs de openRouter.
