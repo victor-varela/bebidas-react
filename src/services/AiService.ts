@@ -8,6 +8,12 @@ export const openrouter = createOpenRouter({
 export const generateRecipeService = async (prompt: string) => {
   const result = streamText({
     model: openrouter("meta-llama/llama-4-maverick:free"),
+    // model: openrouter("deepseek/deepseek-chat-v3.1:free"),
+    // model: openrouter("openai/gpt-oss-120b:free"),
+    system:
+      "Eres un bartender profesional con 30 años de experiencia con amor por los tragos clasicos." +
+      "Si te hacen una pregunta que no tiene que ver con recetas de tragos, bebidas o cocktails debes respetuosamente decir que no es tu funcion.",
+      temperature:1,
     prompt,
   });
 
@@ -27,5 +33,9 @@ Vercel AI SDK + OpenRouter → mejor si querés flexibilidad entre modelos, UI d
 - Esa variable como es una instancia de openRouter --> el puente entre APP y openRouter la usamos para asignar el modelo, prompt etc a streamText ---> el manejador de respuesta 'en vivo' stream de la dependencia 'ai'. El modelo lo tenemos de la web de openrouter seleccionando el que mas nos guste.
 
 - La funcion generateRecipeService retorna el metodo .textStream quien es el que guarda la respuesta, es un dato de tipo  AsyncIterableStream<string> significa que se va llenando asincrono y se va iterando.. que emocion!! la pregunta es : como se itera un dato asincrono? --> con un for await.
+
+- Para solo hacer consultas usamos model y prompt. Para el comportamiento usamos system y temperature.
+
+Gracias a la dependencia AI que es de los creadores de NextJs y Vercel se hace la integracion de estas variables (system--> el rol de la IA (puedes sumar varios roles uniendos los strings con + 'eres bartender' + 'solo respondes preguntas de bartender' + 'tienes predileccion por los clasicos' etc...) y temperature--> que tal loca se pone el rango es de 0 a 1) la web es la de sdk vercel ai : https://ai-sdk.dev/
 
 */

@@ -4,6 +4,7 @@ export default function GenerateAI() {
   const showNotification = useAppStore(state => state.showNotification);
   const generateRecipe = useAppStore(state => state.generateRecipe);
   const recipe = useAppStore(state => state.recipe);
+  const isGenerating = useAppStore(state => state.isGenerating);
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -35,7 +36,10 @@ export default function GenerateAI() {
             <button
               type="submit"
               aria-label="Enviar"
-              className={`cursor-pointer absolute top-1/2 right-5 transform -translate-x-1/2 -translate-y-1/2`}
+              className={`absolute top-1/2 right-5 transform -translate-x-1/2 -translate-y-1/2 ${
+                isGenerating ? "cursor-not-allowed opacity-50 " : "cursor-pointer"
+              }`}
+              disabled={isGenerating}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -54,7 +58,7 @@ export default function GenerateAI() {
             </button>
           </div>
         </form>
-
+           {isGenerating && <p className="text-center animate-pulse">Generando...</p>}   
         <div className="py-10 whitespace-pre-wrap">{recipe}</div>
       </div>
     </>
@@ -64,6 +68,21 @@ export default function GenerateAI() {
 /*
 - Validamos el onSubmit usando el objeto FormData.
 - Usamos async y await generateRecipe para await.. esperar a que tenga la data desde openROuter (el modelo IA)
+
+✅ Qué hace whitespace-pre-wrap
+
+Cuando aplicás esta clase de Tailwind, en CSS equivale a:
+
+white-space: pre-wrap;
+
+
+Esto significa:
+
+Respeta los saltos de línea (\n) → lo que viene de la IA aparece en líneas distintas.
+
+Respeta los espacios consecutivos → si hay dos espacios, los muestra.
+
+Pero también hace wrap (ajuste automático) → si la línea es muy larga, la corta y la baja a la siguiente, evitando el scroll horizontal infinito.
 
 
 
