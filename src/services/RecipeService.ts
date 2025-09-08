@@ -34,7 +34,7 @@ export const getCategories = async () => {
 };
 
 export const getRecipies = async (search: SearchFilter) => {
-  const url = `https:www.thecocktaildb.com/api/json/v1/1/filter.php?i=${search.ingredient}&c=${search.category}`;
+  const url = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${search.ingredient}&c=${search.category}`;
 
   const { data } = await axios(url);
 
@@ -49,7 +49,7 @@ export const getRecipies = async (search: SearchFilter) => {
 };
 
 export const getSelectedRecipe = async (id: Recipe["idDrink"]) => {
-  const url = `https:www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
+  const url = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
 
   const { data } = await axios(url);
 
