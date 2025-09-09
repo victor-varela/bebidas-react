@@ -5,11 +5,13 @@ export type AiSliceType = {
   recipe: string;
   generateRecipe: (prompt: string) => Promise<void>;
   isGenerating: boolean;
+  finish: boolean;
 };
 
 export const createAiSlice: StateCreator<AiSliceType> = set => ({
   recipe: "",
   isGenerating: false,
+  finish: false,
   generateRecipe: async prompt => {
     const data = await generateRecipeService(prompt);
     set({ recipe: "" });
@@ -20,6 +22,10 @@ export const createAiSlice: StateCreator<AiSliceType> = set => ({
       }));
     }
     set({ isGenerating: false });
+
+    setTimeout(() => {
+      set({ finish: true });
+    }, 3000);
   },
 });
 
