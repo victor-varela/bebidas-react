@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useAppStore } from "../stores/useAppStore";
 
 export default function GenerateAI() {
@@ -6,6 +7,16 @@ export default function GenerateAI() {
   const recipe = useAppStore(state => state.recipe);
   const isGenerating = useAppStore(state => state.isGenerating);
   const finish = useAppStore(sate => sate.finish);
+  const handleAiFavorite = useAppStore(state => state.handleAiFavorite);
+  const [showButton, setShowButton] = useState(false);
+
+  useEffect(() => {
+    finish &&
+      setTimeout(() => {
+        setShowButton(true);
+      }, 3000);
+  }, [finish]);
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -63,16 +74,17 @@ export default function GenerateAI() {
         {isGenerating && <p className="text-center animate-pulse">Generando...</p>}
         <div className="flex flex-col py-10 px-3 whitespace-pre-wrap">{recipe}</div>
         <button
-          className={
-            !finish
-              ? "hidden"
-              : "w-full mt-5 p-3 bg-orange-600 hover:bg-orange-500 rounded text-center text-white font-bold uppercase cursor-pointer shadow"
-          }
+          className={`transition-all duration-500 transform 
+              ${
+                showButton
+                  ? "opacity-100 translate-x-6 bg-orange-400 w-full p-2 text-white uppercase font-bold hover:bg-orange-500 cursor-pointer"
+                  : "opacity-0 translate-x-0"
+              }`}
           type="button"
-          // onClick={() => {
-          //   handleClickFavorite(selectedRecipe);
-          //   closeModal();
-          // }}
+          onClick={() => {
+            handleAiFavorite()
+            // closeModal();
+          }}
         >
           Agregar a Favoritos
           {/* {favoriteExist(selectedRecipe.idDrink) ? "Eliminar Favorito" : "Agregar a Favoritos"} */}

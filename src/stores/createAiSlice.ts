@@ -6,9 +6,10 @@ export type AiSliceType = {
   generateRecipe: (prompt: string) => Promise<void>;
   isGenerating: boolean;
   finish: boolean;
+  handleAiFavorite: ()=> void
 };
 
-export const createAiSlice: StateCreator<AiSliceType> = set => ({
+export const createAiSlice: StateCreator<AiSliceType> = (set, get) => ({
   recipe: "",
   isGenerating: false,
   finish: false,
@@ -23,10 +24,14 @@ export const createAiSlice: StateCreator<AiSliceType> = set => ({
     }
     set({ isGenerating: false });
 
-    setTimeout(() => {
-      set({ finish: true });
-    }, 3000);
+    set({ finish: true });
   },
+
+  handleAiFavorite: ()=>{
+
+    console.log('desde handleAI...', get().recipe);
+    
+  }
 });
 
 /*
