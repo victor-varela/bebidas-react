@@ -5,33 +5,28 @@ export type AiSliceType = {
   recipe: string;
   generateRecipe: (prompt: string) => Promise<void>;
   isGenerating: boolean;
-  finish: boolean;
-  handleAiFavorite: ()=> void
+  handleAiFavorite: () => void;
 };
 
 export const createAiSlice: StateCreator<AiSliceType> = (set, get) => ({
   recipe: "",
   isGenerating: false,
-  finish: false,
   generateRecipe: async prompt => {
     const data = await generateRecipeService(prompt);
-    set({ recipe: "" });
+    set({ recipe: ""});
     for await (const textPart of data) {
       set({ isGenerating: true });
       set(state => ({
         recipe: state.recipe + textPart,
       }));
     }
-    set({ isGenerating: false });
-
-    set({ finish: true });
+    set({ isGenerating: false});
   },
 
-  handleAiFavorite: ()=>{
-
-    console.log('desde handleAI...', get().recipe);
+  handleAiFavorite: () => {
+    console.log("desde handleAI...", get().recipe);
     
-  }
+  },
 });
 
 /*

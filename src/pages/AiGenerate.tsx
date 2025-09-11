@@ -1,21 +1,23 @@
 import { useEffect, useState } from "react";
 import { useAppStore } from "../stores/useAppStore";
+import { is } from "zod/v4/locales";
 
 export default function GenerateAI() {
   const showNotification = useAppStore(state => state.showNotification);
   const generateRecipe = useAppStore(state => state.generateRecipe);
   const recipe = useAppStore(state => state.recipe);
   const isGenerating = useAppStore(state => state.isGenerating);
-  const finish = useAppStore(sate => sate.finish);
   const handleAiFavorite = useAppStore(state => state.handleAiFavorite);
+
   const [showButton, setShowButton] = useState(false);
 
   useEffect(() => {
-    finish &&
-      setTimeout(() => {
-        setShowButton(true);
-      }, 3000);
-  }, [finish]);
+    if (!isGenerating && recipe !=='') {
+      setShowButton(true);
+    }else{
+      setShowButton(false)
+    }
+  }, [isGenerating, recipe]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -74,15 +76,15 @@ export default function GenerateAI() {
         {isGenerating && <p className="text-center animate-pulse">Generando...</p>}
         <div className="flex flex-col py-10 px-3 whitespace-pre-wrap">{recipe}</div>
         <button
-          className={`transition-all duration-500 transform 
+          className={` transform origin-left transition-all duration-1000 ease-in-out 
               ${
                 showButton
-                  ? "opacity-100 translate-x-6 bg-orange-400 w-full p-2 text-white uppercase font-bold hover:bg-orange-500 cursor-pointer"
-                  : "opacity-0 translate-x-0"
+                  ? "opacity-100 scale-x-100 bg-orange-400 w-full p-2 text-white uppercase font-bold hover:bg-orange-500 cursor-pointer"
+                  : "opacity-0 scale-x-0"
               }`}
           type="button"
           onClick={() => {
-            handleAiFavorite()
+            handleAiFavorite();
             // closeModal();
           }}
         >
