@@ -1,5 +1,6 @@
 import type { StateCreator } from "zustand";
 import { generateRecipeService } from "../services/AiService";
+import { findIngredients} from "../helpers";
 
 export type AiSliceType = {
   recipe: string;
@@ -13,19 +14,32 @@ export const createAiSlice: StateCreator<AiSliceType> = (set, get) => ({
   isGenerating: false,
   generateRecipe: async prompt => {
     const data = await generateRecipeService(prompt);
-    set({ recipe: ""});
+    set({ recipe: "" });
     for await (const textPart of data) {
       set({ isGenerating: true });
       set(state => ({
         recipe: state.recipe + textPart,
       }));
     }
-    set({ isGenerating: false});
+    set({ isGenerating: false });
   },
 
   handleAiFavorite: () => {
-    console.log("desde handleAI...", get().recipe);
-    
+    //separa por espacios vacios la respuesta de la AI
+    const lines = get().recipe.split("\n");
+    console.log(lines);
+
+    //Obtener titulo
+    const title = lines[0];
+
+    //Obtener ingredientes
+    const { ingredients, instructions } = findIngredients(lines);
+    console.log(title);
+    console.log(ingredients);
+    console.log(instructions);
+
+    //Obtener Instrucciones
+    //  const instructions = findInstructions(lines)
   },
 });
 
