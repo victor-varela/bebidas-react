@@ -1,6 +1,7 @@
 import type { StateCreator } from "zustand";
 import { generateRecipeService } from "../services/AiService";
-import { findIngredients} from "../helpers";
+import { createAiRecipe } from "../helpers";
+import type { FavoritesSliceType } from "./createFavoritesSlice";
 
 export type AiSliceType = {
   recipe: string;
@@ -9,7 +10,7 @@ export type AiSliceType = {
   handleAiFavorite: () => void;
 };
 
-export const createAiSlice: StateCreator<AiSliceType> = (set, get) => ({
+export const createAiSlice: StateCreator<AiSliceType & FavoritesSliceType, [], [], AiSliceType> = (set, get) => ({
   recipe: "",
   isGenerating: false,
   generateRecipe: async prompt => {
@@ -29,17 +30,9 @@ export const createAiSlice: StateCreator<AiSliceType> = (set, get) => ({
     const lines = get().recipe.split("\n");
     console.log(lines);
 
-    //Obtener titulo
-    const title = lines[0];
-
-    //Obtener ingredientes
-    const { ingredients, instructions } = findIngredients(lines);
-    console.log(title);
-    console.log(ingredients);
-    console.log(instructions);
-
-    //Obtener Instrucciones
-    //  const instructions = findInstructions(lines)
+    //Adaptar formato generado por AI al type Recipe que espera adFavorite
+    const aiRecipe = createAiRecipe(lines);
+    get().adFavorite(aiRecipe)
   },
 });
 
