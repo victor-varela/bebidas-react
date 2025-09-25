@@ -64,12 +64,14 @@ const ingredientsProps = Object.fromEntries(
   | "strIngredient6"
 >;
 
-  console.log(ingredientsProps);  
+  console.log(ingredientsProps);
+
+  const placeHolders =["/drink1.jpg","/drink2.jpg","/drink3.jpg"]
 
   const aiRecipe: Recipe = {
-    idDrink: crypto.randomUUID(),
+    idDrink: "ai"+ crypto.randomUUID(),
     strDrink: title,
-    strDrinkThumb: "",
+    strDrinkThumb: placeHolders[Math.floor(Math.random()* placeHolders.length)],
     strInstructions: instructions.toString(),
    ...ingredientsProps,
     strMeasure1: null,
