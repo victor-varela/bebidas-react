@@ -3,12 +3,14 @@ import { getCategories, getRecipies, getSelectedRecipe } from "../services/Recip
 import type { Categories, Recipes, Recipe, SearchFilter } from "../types";
 
 //al principio no sabemos como es la estructura de las categorias porque eso lo da la api. por eso creamos una category 'generic' para hacer feliz a Ts.
+type SelecRecipeParam = { id: Recipe["idDrink"] } | { recipe: Recipe };
+
 export type RecipesSliceType = {
   categories: Categories;
   fecthCategories: () => Promise<void>;
   fetchRecipes: (search: SearchFilter) => Promise<void>;
   recipes: Recipes;
-  selectRecipe: (id: Recipe["idDrink"], options: { ai: boolean }) => Promise<void>;
+  selectRecipe: (param: SelecRecipeParam) => Promise<void>;
   selectedRecipe: Recipe;
   modal: boolean;
   closeModal: () => void;
@@ -37,13 +39,13 @@ export const createRecipesSlice: StateCreator<RecipesSliceType> = set => ({
     set({ recipes });
   },
 
-  selectRecipe: async (id, ai) => {
-    if (ai) {
-      console.log("ai generated recipe..");
-      return;
+  selectRecipe: async param => {
+    if ("recipe" in param) {
+      set({ selectedRecipe: param.recipe, modal: true });
+    } else {
+      const selectedRecipe = await getSelectedRecipe(param.id);
+      set({ selectedRecipe, modal: true });
     }
-    const selectedRecipe = await getSelectedRecipe(id);
-    set({ selectedRecipe, modal: true });
   },
 
   closeModal: () => {

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAppStore } from "../stores/useAppStore";
-import { is } from "zod/v4/locales";
+
 
 export default function GenerateAI() {
   const showNotification = useAppStore(state => state.showNotification);
