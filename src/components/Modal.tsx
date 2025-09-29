@@ -3,7 +3,6 @@ import { Fragment } from "react";
 import { useAppStore } from "../stores/useAppStore";
 import type { Recipe } from "../types";
 
-
 export default function Modal() {
   const modal = useAppStore(state => state.modal);
   const closeModal = useAppStore(state => state.closeModal);
@@ -27,6 +26,16 @@ export default function Modal() {
       }
     }
 
+    return ingredients;
+  };
+
+  const renderAiIngredients = () => {
+    const ingredients = [];
+
+    for (let i = 0; i <= 6; i++) {
+      const ingredient = selectedRecipe[`strIngredient${i}` as keyof Recipe];
+      ingredients.push(ingredient);
+    }
     return ingredients;
   };
 
@@ -84,7 +93,7 @@ export default function Modal() {
                     {/* Ingredients  */}
                     Ingredientes y Cantidades
                   </DialogTitle>
-                  {renderIngredients()}
+                  {selectedRecipe?.idDrink?.startsWith("ai") ? renderAiIngredients() : renderIngredients()}
                   <DialogTitle as="h3" className="text-gray-900 text-2xl font-extrabold my-5">
                     {/*Instructions*/}
                     Instrucciones

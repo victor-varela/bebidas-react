@@ -7,8 +7,8 @@ export const openrouter = createOpenRouter({
 
 export const generateRecipeService = async (prompt: string) => {
   const result = streamText({
-    model: openrouter("meta-llama/llama-4-maverick:free"),
-    // model: openrouter("deepseek/deepseek-chat-v3.1:free"),
+    // model: openrouter("meta-llama/llama-4-maverick:free"),
+    model: openrouter("deepseek/deepseek-chat-v3.1:free"),
     // model: openrouter("openai/gpt-oss-120b:free"),
     system:
       "Eres un bartender profesional con 30 años de experiencia con amor por los tragos clasicos." +
