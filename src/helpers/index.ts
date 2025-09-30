@@ -48,32 +48,27 @@ export const createAiRecipe = (lines: string[]) => {
     } else break;
   }
 
-const ingredientsProps = Object.fromEntries(
-  Array.from({ length: 6 }).map((_, index) => {
-    const key = `strIngredient${index + 1}` as keyof Recipe;
-    const value = ingredients[index]?.ingredient ?? null;
-    return [key, value];
-  })
-) as Pick<
-  Recipe,
-  | "strIngredient1"
-  | "strIngredient2"
-  | "strIngredient3"
-  | "strIngredient4"
-  | "strIngredient5"
-  | "strIngredient6"
->;
+  const ingredientsProps = Object.fromEntries(
+    Array.from({ length: 6 }).map((_, index) => {
+      const key = `strIngredient${index + 1}` as keyof Recipe;
+      const value = ingredients[index]?.ingredient ?? null;
+      return [key, value];
+    })
+  ) as Pick<
+    Recipe,
+    "strIngredient1" | "strIngredient2" | "strIngredient3" | "strIngredient4" | "strIngredient5" | "strIngredient6"
+  >;
 
   console.log(ingredientsProps);
 
-  const placeHolders =["/drink1.jpg","/drink2.jpg","/drink3.jpg"]
+  const placeHolders = ["/drink1.jpg", "/drink2.jpg", "/drink3.jpg"];
 
   const aiRecipe: Recipe = {
-    idDrink: "ai"+ crypto.randomUUID(),
+    idDrink: "ai" + crypto.randomUUID(),
     strDrink: title,
-    strDrinkThumb: placeHolders[Math.floor(Math.random()* placeHolders.length)],
+    strDrinkThumb: placeHolders[Math.floor(Math.random() * placeHolders.length)],
     strInstructions: instructions.toString(),
-   ...ingredientsProps,
+    ...ingredientsProps,
     strMeasure1: null,
     strMeasure2: null,
     strMeasure3: null,
@@ -82,7 +77,7 @@ const ingredientsProps = Object.fromEntries(
     strMeasure6: null,
   };
 
-  return aiRecipe
+  return aiRecipe;
 };
 
 //mi bebe.. estuve 4 o 5 dias creando esto. Sientete orgulloso!!

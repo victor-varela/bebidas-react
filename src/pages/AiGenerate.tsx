@@ -79,8 +79,8 @@ export default function GenerateAI() {
           className={` transform origin-left transition-all duration-1000 ease-in-out 
               ${
                 showButton
-                  ? "opacity-100 scale-x-100 bg-orange-400 w-full p-2 text-white uppercase font-bold hover:bg-orange-500 cursor-pointer"
-                  : "opacity-0 scale-x-0"
+                  ? "opacity-100 bg-orange-400 w-full p-2 text-white uppercase font-bold hover:bg-orange-500 cursor-pointer"
+                  : "opacity-0 "
               }`}
           type="button"
           onClick={() => {
