@@ -35,7 +35,7 @@ const DrinkCard = ({ recipe }: DrinkCardProps) => {
 
 export default DrinkCard;
 
-// Type Guard en TypeScript
+// Type Guard en TypeScript : Un type guard es una forma de enseñarle a TypeScript cómo distinguir entre tipos dentro de una unión.
 // -------------------------
 // isAiRecipe recibe un parámetro `r` que puede ser Drink o Recipe.
 // La anotación de retorno `r is Recipe` es un *Type Predicate*.
