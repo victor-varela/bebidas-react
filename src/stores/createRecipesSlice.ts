@@ -1,16 +1,16 @@
 import type { StateCreator } from "zustand";
 import { getCategories, getRecipies, getSelectedRecipe } from "../services/RecipeService";
-import type { Categories, Recipes, Recipe, SearchFilter } from "../types";
+import type { Categories, Recipes, Recipe, SearchFilter} from "../types";
 
 //al principio no sabemos como es la estructura de las categorias porque eso lo da la api. por eso creamos una category 'generic' para hacer feliz a Ts.
-type SelecRecipeParam = { id: Recipe["idDrink"] } | { recipe: Recipe };
+type SelectRecipeParam = { id: Recipe["idDrink"] } | { recipe: Recipe };
 
 export type RecipesSliceType = {
   categories: Categories;
   fecthCategories: () => Promise<void>;
   fetchRecipes: (search: SearchFilter) => Promise<void>;
   recipes: Recipes;
-  selectRecipe: (param: SelecRecipeParam) => Promise<void>;
+  selectRecipe: (param: SelectRecipeParam) => Promise<void>;
   selectedRecipe: Recipe;
   modal: boolean;
   closeModal: () => void;

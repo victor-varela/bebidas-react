@@ -1,13 +1,15 @@
 import { useAppStore } from "../stores/useAppStore";
-import type { Recipe } from "../types";
+import type { Drink, Recipe} from "../types";
 
 type DrinkCardProps = {
-  recipe: Recipe;
+  recipe: Drink | Recipe;
 };
 
 const DrinkCard = ({ recipe }: DrinkCardProps) => {
   const selectRecipe = useAppStore(state => state.selectRecipe);
-  const ai = recipe.idDrink.startsWith("ai");
+  const isAiRecipe = (r: Recipe | Drink): r is Recipe=>{
+    return r.idDrink.startsWith('ai')
+  }
   return (
     <div className="shadow-lg">
       <div className="w-full aspect-[4/5] overflow-hidden">
@@ -22,7 +24,7 @@ const DrinkCard = ({ recipe }: DrinkCardProps) => {
         <button
           type="button"
           className="bg-orange-400 hover:bg-orange-500 mt-5 w-full p-3 font-bold text-white text-lg cursor-pointer"
-          onClick={() => (ai ? selectRecipe({ recipe }) : selectRecipe({ id: recipe.idDrink }))}
+          onClick={() => (isAiRecipe(recipe) ? selectRecipe({ recipe }) : selectRecipe({ id: recipe.idDrink }))}
         >
           Ver Receta
         </button>
@@ -32,3 +34,18 @@ const DrinkCard = ({ recipe }: DrinkCardProps) => {
 };
 
 export default DrinkCard;
+
+// Type Guard en TypeScript
+// -------------------------
+// isAiRecipe recibe un parámetro `r` que puede ser Drink o Recipe.
+// La anotación de retorno `r is Recipe` es un *Type Predicate*.
+// Significa: "si esta función devuelve true, entonces `r` es un Recipe".
+// Esto permite a TypeScript refinar el tipo dentro de un if:
+//   if (isAiRecipe(r)) {  // aquí r es Recipe }
+//   else {               // aquí r es Drink  }
+//
+// En este caso, decidimos que los Recipe de IA tienen un idDrink
+// que empieza con "ai". Por eso la función devuelve true cuando se cumple esa condición.
+// const isAiRecipe = (r: Drink | Recipe): r is Recipe => {
+//   return r.idDrink.startsWith("ai");
+// };
