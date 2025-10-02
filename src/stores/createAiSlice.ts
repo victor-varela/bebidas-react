@@ -7,14 +7,14 @@ export type AiSliceType = {
   recipe: string;
   generateRecipe: (prompt: string) => Promise<void>;
   isGenerating: boolean;
-  badQuestion: boolean;
+  isOutOfContext: boolean;
   handleAiFavorite: () => void;
 };
 
 export const createAiSlice: StateCreator<AiSliceType & FavoritesSliceType, [], [], AiSliceType> = (set, get) => ({
   recipe: "",
   isGenerating: false,
-  badQuestion: false,
+  isOutOfContext: false,
   generateRecipe: async prompt => {
     const data = await generateRecipeService(prompt);
     set({ recipe: "" });
@@ -29,7 +29,7 @@ export const createAiSlice: StateCreator<AiSliceType & FavoritesSliceType, [], [
 
     set({
       isGenerating: false,
-      badQuestion: !validWords.some(word => get().recipe.toLocaleLowerCase().includes(word)),
+      isOutOfContext: !validWords.some(word => get().recipe.toLocaleLowerCase().includes(word)),
     });
   },
 
