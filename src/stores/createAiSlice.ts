@@ -7,12 +7,14 @@ export type AiSliceType = {
   recipe: string;
   generateRecipe: (prompt: string) => Promise<void>;
   isGenerating: boolean;
+  badQuestion: boolean;
   handleAiFavorite: () => void;
 };
 
 export const createAiSlice: StateCreator<AiSliceType & FavoritesSliceType, [], [], AiSliceType> = (set, get) => ({
   recipe: "",
   isGenerating: false,
+  badQuestion: false,
   generateRecipe: async prompt => {
     const data = await generateRecipeService(prompt);
     set({ recipe: "" });
@@ -22,7 +24,13 @@ export const createAiSlice: StateCreator<AiSliceType & FavoritesSliceType, [], [
         recipe: state.recipe + textPart,
       }));
     }
-    set({ isGenerating: false });
+
+    const validWords = ["**ingredientes:**", "**preparacion**", "**instrucciones:**"];
+
+    set({
+      isGenerating: false,
+      badQuestion: !validWords.some(word => get().recipe.toLocaleLowerCase().includes(word)),
+    });
   },
 
   handleAiFavorite: () => {
@@ -32,7 +40,7 @@ export const createAiSlice: StateCreator<AiSliceType & FavoritesSliceType, [], [
 
     //Adaptar formato generado por AI al type Recipe que espera adFavorite
     const aiRecipe = createAiRecipe(lines);
-    get().adFavorite(aiRecipe)
+    get().adFavorite(aiRecipe);
   },
 });
 

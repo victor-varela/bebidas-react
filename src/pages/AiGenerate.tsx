@@ -1,23 +1,23 @@
 import { useEffect, useState } from "react";
 import { useAppStore } from "../stores/useAppStore";
 
-
 export default function GenerateAI() {
   const showNotification = useAppStore(state => state.showNotification);
   const generateRecipe = useAppStore(state => state.generateRecipe);
   const recipe = useAppStore(state => state.recipe);
   const isGenerating = useAppStore(state => state.isGenerating);
+  const badQuestion = useAppStore(state => state.badQuestion);
   const handleAiFavorite = useAppStore(state => state.handleAiFavorite);
 
   const [showButton, setShowButton] = useState(false);
-
+  
   useEffect(() => {
-    if (!isGenerating && recipe !=='') {
+    if (!isGenerating && recipe !== "" && !badQuestion) {
       setShowButton(true);
-    }else{
-      setShowButton(false)
+    } else {
+      setShowButton(false);
     }
-  }, [isGenerating, recipe]);
+  }, [isGenerating, recipe, badQuestion]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
